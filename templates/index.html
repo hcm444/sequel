@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Console</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00ff00; /* Lighter green */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label, textarea, input {
+            color: #00ff00; /* Lighter green */
+        }
+
+        textarea {
+            background-color: black;
+            border: 1px solid #00ff00; /* Lighter green */
+            color: #00ff00; /* Lighter green */
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        input {
+            background-color: #00ff00; /* Lighter green */
+            color: black;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #00ff00; /* Lighter green */
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>SQL Console</h1>
+    <form method="post" action="/execute_sql">
+        <label for="sql_query">Enter SQL Query:</label><br>
+        <textarea name="sql_query" rows="4" cols="50"></textarea><br>
+        <input type="submit" value="Execute">
+    </form>
+
+    {% if error %}
+        <p>Error: {{ error }}</p>
+    {% endif %}
+
+    {% if result %}
+        <h3>Query Result:</h3>
+        <table>
+            <tr>
+                {% for col in result[0] %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in result %}
+                <tr>
+                    {% for value in row %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
