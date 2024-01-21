@@ -14,10 +14,15 @@ def execute_sql():
         connection = sqlite3.connect('movies.db')
         cursor = connection.cursor()
         cursor.execute(query)
+
+        # Fetch column names
+        columns = [description[0] for description in cursor.description]
+
         result = cursor.fetchall()
         connection.commit()
         connection.close()
-        return render_template('index.html', result=result, query=query)
+
+        return render_template('index.html', result=result, query=query, columns=columns)
     except Exception as e:
         return render_template('index.html', error=str(e))
 

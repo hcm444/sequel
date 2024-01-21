@@ -90,7 +90,6 @@
 <body>
     <section class="section">
         <div class="container">
-            <h1 class="title">SQL Query Executor</h1>
 
             <form method="POST" action="/execute_sql">
                 <div class="field">
@@ -105,19 +104,28 @@
             </form>
 
             {% if result %}
-                <h2 class="subtitle">Query Result:</h2>
-                <div class="table-container">
-                    <table class="table is-fullwidth">
-                        {% for row in result %}
-                            <tr>
-                                {% for value in row %}
-                                    <td>{% if 'http' in value %}<a href="{{ value }}" target="_blank">{{ value }}</a>{% else %}{{ value }}{% endif %}</td>
-                                {% endfor %}
-                            </tr>
+    <h2 class="subtitle">Query Result:</h2>
+    <div class="table-container">
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    {% for header in columns %}
+                        <th>{{ header }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in result %}
+                    <tr>
+                        {% for value in row %}
+                            <td>{% if 'http' in value %}<a href="{{ value }}" target="_blank">{{ value }}</a>{% else %}{{ value }}{% endif %}</td>
                         {% endfor %}
-                    </table>
-                </div>
-            {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
 
             {% if error %}
                 <h2 class="subtitle">Error:</h2>
